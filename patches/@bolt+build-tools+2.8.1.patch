@@ -1,0 +1,33 @@
+diff --git a/node_modules/@bolt/build-tools/create-webpack-config.js b/node_modules/@bolt/build-tools/create-webpack-config.js
+index 58b95c0..01c0c2d 100644
+--- a/node_modules/@bolt/build-tools/create-webpack-config.js
++++ b/node_modules/@bolt/build-tools/create-webpack-config.js
+@@ -84,7 +84,7 @@ async function createWebpackConfig(buildConfig) {
+     `$bolt-namespace: ${config.namespace};`,
+     `$bolt-css-vars-json-data-export: ${themifyOptions.fallback.jsonDataExport};`,
+     // output $bolt-lang variable in Sass even if not specified so things fall back accordingly.
+-    `${config.lang ? `$bolt-lang: ${config.lang};` : '$bolt-lang: null;'}`,
++    `${config.lang ? `$bolt-lang: ${config.lang}!global;` : '$bolt-lang: "en" !global;'}`,
+   ];
+ 
+   // Default global JS data defined
+@@ -230,11 +230,14 @@ async function createWebpackConfig(buildConfig) {
+       loader: 'sass-loader',
+       options: {
+         sourceMap: config.sourceMaps,
+-        importer: [npmSass.importer],
+-        functions: sassExportData,
+-        precision: 3,
+-        data: globalSassData.join('\n'),
+-        outputStyle: 'nested',
++        webpackImporter: false,
++        prependData: globalSassData.join('\n'),
++        sassOptions: {
++          importer: [npmSass.importer],
++          functions: sassExportData,
++          precision: 3,
++          outputStyle: 'nested'
++        }
+       },
+     },
+   ];

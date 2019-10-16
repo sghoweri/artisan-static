@@ -1,0 +1,9 @@
+{
+  "lerna": "3.10.7",
+  "version": "2.8.2",
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--ignore-optional"
+  ],
+  "useWorkspaces": true
+}

@@ -1,5 +1,71 @@
 {
-    "require": {
-        "tightenco/jigsaw": "^1.2"
+  "require": {
+    "bolt-design-system/twig-renderer": "2.8.0",
+    "bolt-design-system/core-php": "2.8.0",
+    "bolt-design-system/drupal-twig-extensions": "2.8.0",
+    "bolt-design-system/styleguidekit-twig-default": "2.8.0",
+    "pattern-lab/core": "^2.8.10",
+    "pattern-lab/patternengine-twig": "^2.2.2",
+    "evanlovely/plugin-twig-namespaces": "^1.1.1",
+    "cweagans/composer-patches": "^1.6.4"
+  },
+  "require2": {
+    "tightenco/jigsaw": "^1.2"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "src/twig-helpers/core-php"
+    },
+    {
+      "type": "path",
+      "url": "src/twig-helpers/twig-renderer"
+    },
+    {
+      "type": "path",
+      "url": "src/twig-helpers/drupal-twig-extensions"
+    },
+    {
+      "type": "path",
+      "url": "src/twig-helpers/styleguidekit-twig-default"
     }
+  ],
+  "autoload": {
+    "psr-0": {
+      "PatternLab": "core/src/"
+    }
+  },
+  "scripts": {
+    "server": "php core/console --server",
+    "build": "php -d memory_limit=4048M core/console --generate",
+    "watch": "php core/console --watch",
+    "start": "php core/console --server --quiet & php core/console --watch",
+    "setup": "@composer install --no-interaction --prefer-dist --no-progress",
+    "post-install-cmd": [
+      "PatternLab\\Installer::postInstallCmd"
+    ],
+    "post-update-cmd": [
+      "PatternLab\\Installer::postUpdateCmd"
+    ],
+    "post-root-package-install": [
+      "PatternLab\\Installer::setProjectInstall",
+      "PatternLab\\Installer::getSuggestedStarterKits",
+      "PatternLab\\Installer::getConfigOverrides"
+    ],
+    "post-package-install": [
+      "PatternLab\\Installer::postPackageInstall"
+    ],
+    "post-package-update": [
+      "PatternLab\\Installer::postPackageUpdate"
+    ],
+    "pre-package-uninstall": [
+      "PatternLab\\Installer::prePackageUninstall"
+    ]
+  },
+  "extra": {
+    "patches-file": "composer.patches.json",
+    "installer-types": [
+      "patternlab-plugin"
+    ]
+  }
 }

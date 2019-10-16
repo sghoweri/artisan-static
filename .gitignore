@@ -1,5 +1,7 @@
 /build_local/
 /build_staging/
+www
+cache
 /build_production/
 /node_modules/
 /source/assets/build/css/
